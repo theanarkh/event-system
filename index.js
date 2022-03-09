@@ -32,19 +32,19 @@ class EventSystem {
 		this.wakeup && this.wakeup();
 	}
 
-        // 处理任务
-        async handleTask() {
-	    if (this.queue.length === 0) {
-	        return;
-	    }
-	    // 本轮事件循环加入到任务，下一轮事件循环再处理，防止其他任务没有机会处理
-	    const queue = this.queue;
-	    this.queue = [];
-	    while(queue.length) {
-	        const func = queue.shift();
-	        await func();
-	    }
+    // 处理任务
+    async handleTask() {
+        if (this.queue.length === 0) {
+            return;
         }
+        // 本轮事件循环加入到任务，下一轮事件循环再处理，防止其他任务没有机会处理
+        const queue = this.queue;
+        this.queue = [];
+        while(queue.length) {
+            const func = queue.shift();
+            await func();
+        }
+    }
 
 	// 事件循环
 	async run() {
